@@ -29,13 +29,16 @@ typedef struct {
     int value;
 } TokenLiteral;
 
+void lexer(FILE *file) {
+    char current_char = fgetc(file);
+    while(current_char != EOF) {
+        printf("%c", current_char);
+        current_char = fgetc(file);
+    }
+}
+
 int main() {
     FILE *file;
     file = fopen("test.unn", "r");
-    char current = fgetc(file);
-
-    while(current != EOF) {
-        printf("%c", current);
-        current = fgetc(file);
-    }
+    lexer(file);
 }
