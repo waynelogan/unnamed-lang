@@ -20,7 +20,6 @@ typedef struct {
     TypeKeyword type;
 } TokenKeyword;
 
-
 typedef struct {
     TypeSeparator type;
 } TokenSeparator;
@@ -31,8 +30,12 @@ typedef struct {
 } TokenLiteral;
 
 int main() {
-    TokenLiteral token;
-    token.type = INT;
-    token.value = 5;
-    printf("%d\n", token.value);
+    FILE *file;
+    file = fopen("test.unn", "r");
+    char current = fgetc(file);
+
+    while(current != EOF) {
+        printf("%c", current);
+        current = fgetc(file);
+    }
 }
