@@ -27,10 +27,22 @@ typedef struct {
 
 typedef struct {
     TypeLiteral type;
-    int value;
+    char *value;
 } TokenLiteral;
 
- 
+ TokenLiteral *generate_number(char current, FILE *file) {
+    TokenLiteral *token = malloc(sizeof(TokenLiteral));
+    token->type = INT;
+    char *value = malloc(sizeof(char) * 8);
+    int value_index = 0;
+    while (isdigit(current) && current != EOF) {
+        value[value_index] = current;
+        value_index++;
+        current = fgetc(file);
+    }
+    token->value = value;
+    return (token);
+ }
 
 void lexer(FILE *file) {
     // read next char from a stream
@@ -43,8 +55,8 @@ void lexer(FILE *file) {
         } else if (current == ')') {
             printf("found close paren\n");
         } else if (isdigit(current)) {
-            // sub ASCII of 0 (is 48) from ascii of number to get number
-            printf("found digit %d\n", current - '0');
+            TokenLiteral *test_token = generate_number(current, file);
+            printf("TEST TOKEN VALUE: %s\n", test_token->value);
         } else if(isalpha(current)) {
             printf("found character %c\n", current);
         }
